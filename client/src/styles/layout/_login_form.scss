@@ -1,0 +1,64 @@
+@use 'lay_vars' as v;
+.wrapper
+{
+    // position: absolute;
+    // top:0;
+    // left:0;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+
+}
+.form-container
+{
+    max-width: 400px;
+    min-width: 300px;
+    // min-height: 400px;
+    margin:20px;
+    display: flex;
+    justify-content: center;
+    box-shadow: v.$black-shadow;
+    border-radius: 20px;
+    form
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+
+    }
+    .email-section,.username-section,.password-section,.button-section
+    {
+        
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: center;
+        *
+        {
+            margin: 10px;
+        }
+        input
+        {
+            font-family: 'retro-mono';
+            font-weight: 700;
+            color:v.$l-txt-color;
+            background-color: v.$l-bg-lighter-color;
+            // border: inset 1px v.$l-bg-lighter-color;
+            border-radius: 10px;
+            &:focus
+            {
+                outline: none;
+            }
+            text-align: center;
+            
+        }
+    }
+
+
+
+}

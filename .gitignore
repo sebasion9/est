@@ -1,0 +1,7 @@
+client/node_modules
+client/src/dist/*
+client/src/styles/fonts/*
+client/src/components/Content/img/*
+dist
+node_modules
+src/db/dbconf.json
