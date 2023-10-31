@@ -1,8 +1,15 @@
+import crypto from 'crypto';
+
 export type User = 
 {
-    id:number,
+    id:string,
     username:string,
     password:string,
     email:string
 }
-export type isAvaibleRes = 'username_taken' | 'email_taken' | 'avaible' | undefined;
+export type isAvailableRes = {isAvailable : boolean, message: string}
+
+export function randomId()
+{
+    return crypto.randomBytes(16).toString('hex');
+}

@@ -1,3 +1,4 @@
+import { spawn } from "child_process";
 import { useEffect, useState } from "react";
 
 const Register : React.FC = ()=>
@@ -5,7 +6,7 @@ const Register : React.FC = ()=>
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    //use effect
+    // const [res, setRes] = useState<{success:boolean, message:string}>();
     const handleSubmit = async (e : React.FormEvent) =>
     {
         e.preventDefault();
@@ -19,7 +20,8 @@ const Register : React.FC = ()=>
                 body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&email=${email}`
             })
             const data = await response.json();
-            console.log(data.success);
+            console.log(data.success, data.message);
+            // setRes(data);
         }
         catch(err)
         {
@@ -27,6 +29,8 @@ const Register : React.FC = ()=>
         }
 
     }
+
+
 
     return (
             <div className="form-container">
@@ -67,7 +71,6 @@ const Register : React.FC = ()=>
                         autoComplete="off" />
 
                     </div>
-
                     <div className="button-section">
 
                         <button type="submit" className="btn-template">register</button>

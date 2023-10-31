@@ -1,5 +1,5 @@
 import sql, { Connection, escape } from 'mysql';
-import { User , isAvaibleRes } from './user';
+import { User , isAvailableRes } from './user';
 
 interface dbConfig
 {
@@ -21,7 +21,7 @@ export default class Db
     }
     
     
-    public async user(username?:string, email?:string, id?:number,) : Promise<User[] | undefined>
+    public async user(username?:string, email?:string, id?:number) : Promise<User[] | undefined>
     {
     return new Promise(resolve=>
         {
@@ -71,7 +71,61 @@ export default class Db
 
         })
     }
+    public async checkAvailability(username:string, email:string) : Promise<isAvailableRes>
+    {
+        try
+        {
+            const userByUsername = await this.user(username, undefined, undefined);
 
+            if(userByUsername && userByUsername.length>0)
+            {
+                return { isAvailable : false, message: 'username taken'};
+            }
+            const userByEmail = await this.user(undefined, email, undefined)
+
+            if(userByEmail && userByEmail.length>0)
+            {
+                return { isAvailable : false, message: 'email taken'};
+            }
+            return { isAvailable : true, message : 'success'};
+        }
+        catch(err)
+        {
+            throw err;
+        }
+
+    }
+    public async registerUser(user: User)
+    {
+        if(this.con)
+        {
+            let sql = 'insert into users (id, username, password, email) values (?, ?, ?, ?)';
+            const values = [user.id, user.username, user.password, user.email];
+            this.con.query(sql, values, (err,result)=>
+            {
+                if(err)
+                {
+                    throw err;
+                };
+                return true;
+            })
+        }
+        return false;
+    };
+    public async checkPassword(username:string, password:string)
+    {
+        let users : User[] | undefined = await this.user(username);
+        let user : User;
+        if(users && users.length>0)
+        {
+            user = users[0];
+            if(password === user.password)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 

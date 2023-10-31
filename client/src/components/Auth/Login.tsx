@@ -17,7 +17,8 @@ const Login : React.FC = ()=>
                 body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
             })
             const data = await response.json();
-            console.log(data.success);
+            
+            console.log(data.success, data.message);
         }
         catch(err)
         {
