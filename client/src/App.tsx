@@ -3,9 +3,11 @@ import "./styles/dist/style.css"
 
 import Root from './routes/Root';
 import NoPage from './routes/NoPage';
+import Account from './routes/Account';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sign from './routes/Sign';
+
 function App() {
   return (
     <>
@@ -17,6 +19,9 @@ function App() {
           
           
           <Route path='/sign_up' element={<Sign/>}>
+
+          </Route>
+          <Route path='/account' element={<Account/>}>
 
           </Route>
           

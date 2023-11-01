@@ -1,12 +1,36 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 const items = [
-    'search','categories','login/register'
+    'search','login/register'
 ]
 
 //      ADD MORE ROUTING
 const Navbar : React.FC = ()=>
 {
+    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [username, setUsername] = useState<string>('');
+    useEffect(()=>
+    {
+        fetch('/home')
+        .then(res=>
+            {
+                if(res.ok)return res.json();
+            })
+        .then(data=>
+            {
+                if(data)
+                {
+                    setLoggedIn(data.success);
+                    setUsername(data.username);
+                }
+            })
+        .catch(err=>
+            {
+                throw err;
+                
+            })
+        
+    },[])
     return (
 
         <nav className='navbar'>
@@ -15,6 +39,17 @@ const Navbar : React.FC = ()=>
                 {
                     if(item === "login/register")
                     {
+                        if(loggedIn)
+                        {
+                            return(
+                                <>
+                                <div key={index} className='navbar-item'>
+                                    <Link to="/account">{username}</Link>
+                                </div>
+                                
+                                </>
+                            )
+                        }
                         return(
                         <div key={index} className="navbar-item">
                             

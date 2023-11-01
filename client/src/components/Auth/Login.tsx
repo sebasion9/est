@@ -11,8 +11,9 @@ const Login : React.FC = ()=>
     const handleSubmit = async (e : React.FormEvent) =>
     {
         e.preventDefault();
-        let message = await postSubmit('/login', navigate, username, password);
-        setResMessage(message);
+        let data = await postSubmit('/login', navigate, username, password);
+        setResMessage(data.message);
+        document.cookie = `token=${data.accessToken}`;
     }
     return (
             <div className="form-container">
