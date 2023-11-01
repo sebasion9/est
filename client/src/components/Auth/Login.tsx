@@ -1,65 +1,33 @@
 import { useState } from "react";
+import { UsrPass, postSubmit } from "./UsrPass";
+import { useNavigate } from "react-router-dom";
 
 const Login : React.FC = ()=>
 {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
+    const [resMessage, setResMessage] = useState<string>('');
+    const navigate = useNavigate();
     const handleSubmit = async (e : React.FormEvent) =>
     {
         e.preventDefault();
-        try
-        {
-
-            const response = await fetch('/login',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
-            })
-            const data = await response.json();
-            
-            console.log(data.success, data.message);
-        }
-        catch(err)
-        {
-            console.error('error,',err);
-        }
-
+        let message = await postSubmit('/login', navigate, username, password);
+        setResMessage(message);
     }
     return (
             <div className="form-container">
 
 
                 <form action="/login" onSubmit={handleSubmit}>
-                    <div className="username-section">
-
-                        <label htmlFor="username">username:</label>
-                        <input 
-                        type="text" 
-                        name="username"
-                        value={username}
-                        onChange={(e)=>setUsername(e.target.value)}
-                        autoComplete="off" />
-
-                    </div>
-
-
-                    <div className="password-section">
-
-                        <label htmlFor="password">password:</label>
-                        <input type="password"
-                        name='password'
-                        value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
-                        autoComplete="off" />
-
-                    </div>
-
-                    <div className="button-section">
-
-                        <button type="submit" className="btn-template">login</button>
-
-                    </div>
+                <UsrPass 
+                    username={username}
+                    password={password}
+                    setPassword={setPassword}
+                    setUsername={setUsername}
+                    handleSubmit={handleSubmit}
+                    resMessage={resMessage}
+                    isLogin={true}
+                    />
                     
                 </form>
 

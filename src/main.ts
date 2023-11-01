@@ -2,7 +2,9 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import conf from './db/dbconf.json';
 import Db from './db/db_init';
-import { User, randomId } from './db/user';
+import { User } from './db/user';
+import { randomId, hashPass } from './auth/crypto';
+
 
 let db : Db = new Db;
 db.configCon(conf);
@@ -15,7 +17,7 @@ app.use(bodyParser.json());
 app.post('/login',(req,res)=>
 {
     const body = req.body;
-    let wrong = "wrong combination of username, password";
+    let wrong = "bad combination";
     db.checkAvailability(body.username, body.email).then(async db_res=>
         {
             if(db_res.message === "username taken")
@@ -45,7 +47,18 @@ app.post('/login',(req,res)=>
 app.post('/register',(req,res)=>
 {
     const body = req.body;
-    let user : User = {username: body.username, password: body.password, id: randomId(), email :body.email}
+
+    let userID = randomId();
+    const hashedPass = hashPass(body.password,userID);
+
+    let user : User = {
+        username: body.username, 
+        password: hashedPass, 
+        id: userID, 
+        email :body.email,
+        role: 'user'
+    }
+    
     db.checkAvailability(user.username,user.email).then(db_res=>
         {
             if(db_res.isAvailable)

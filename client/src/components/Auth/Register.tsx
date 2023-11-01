@@ -1,33 +1,26 @@
-import { spawn } from "child_process";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { UsrPass, postSubmit, validateEmail } from "./UsrPass";
 
 const Register : React.FC = ()=>
 {
     const [username, setUsername] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [email, setEmail] = useState<string>('');
-    // const [res, setRes] = useState<{success:boolean, message:string}>();
+    const [res, setRes] = useState<string>('');
+    const navigate = useNavigate();
     const handleSubmit = async (e : React.FormEvent) =>
     {
         e.preventDefault();
-        try
+        if(validateEmail(email))
         {
-
-            const response = await fetch('/register',
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-                body: `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&email=${email}`
-            })
-            const data = await response.json();
-            console.log(data.success, data.message);
-            // setRes(data);
+            let message = await postSubmit('/register', navigate, username, password, email);
+            setRes(message);
         }
-        catch(err)
+        else
         {
-            console.error('error,',err);
+            setRes('enter valid email');
         }
-
     }
 
 
@@ -48,35 +41,15 @@ const Register : React.FC = ()=>
                         autoComplete="off" />
 
                     </div>
-
-                    <div className="username-section">
-
-                        <label htmlFor="username">username:</label>
-                        <input 
-                        type="text" 
-                        name="username"
-                        value={username}
-                        onChange={(e)=>setUsername(e.target.value)}
-                        autoComplete="off" />
-
-                    </div>
-
-                    <div className="password-section">
-
-                        <label htmlFor="password">password:</label>
-                        <input type="password"
-                        name='password'
-                        value={password}
-                        onChange={(e)=>setPassword(e.target.value)}
-                        autoComplete="off" />
-
-                    </div>
-                    <div className="button-section">
-
-                        <button type="submit" className="btn-template">register</button>
-
-                    </div>
-
+                    <UsrPass 
+                    username={username}
+                    password={password}
+                    setPassword={setPassword}
+                    setUsername={setUsername}
+                    handleSubmit={handleSubmit}
+                    resMessage={res}
+                    isLogin={false}
+                    />
                 </form>
                 
             </div>

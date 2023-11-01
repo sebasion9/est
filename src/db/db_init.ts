@@ -1,5 +1,6 @@
 import sql, { Connection, escape } from 'mysql';
 import { User , isAvailableRes } from './user';
+import { hashPass } from '../auth/crypto';
 
 interface dbConfig
 {
@@ -99,8 +100,8 @@ export default class Db
     {
         if(this.con)
         {
-            let sql = 'insert into users (id, username, password, email) values (?, ?, ?, ?)';
-            const values = [user.id, user.username, user.password, user.email];
+            let sql = 'insert into users (id, username, password, email, role) values (?, ?, ?, ?, ?)';
+            const values = [user.id, user.username, user.password, user.email, user.role];
             this.con.query(sql, values, (err,result)=>
             {
                 if(err)
@@ -119,7 +120,9 @@ export default class Db
         if(users && users.length>0)
         {
             user = users[0];
-            if(password === user.password)
+            let hashedPass = hashPass(password, user.id);
+
+            if(hashedPass === user.password)
             {
                 return true;
             }
