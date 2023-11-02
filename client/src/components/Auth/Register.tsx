@@ -11,11 +11,13 @@ const Register : React.FC = ()=>
     const navigate = useNavigate();
     const handleSubmit = async (e : React.FormEvent) =>
     {
-        e.preventDefault();
+        e.preventDefault(); 
+
         if(validateEmail(email))
         {
-            let message = await postSubmit('/register', navigate, username, password, email);
-            setRes(message);
+            let data = await postSubmit('/register', navigate, username, password, email);
+            setRes(data.message);
+            document.cookie = `token=${data.accessToken}`;
         }
         else
         {

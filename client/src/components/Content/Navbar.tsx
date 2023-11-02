@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import getAuth from '../Auth/auth';
 const items = [
     'search','login/register'
 ]
@@ -7,30 +8,26 @@ const items = [
 //      ADD MORE ROUTING
 const Navbar : React.FC = ()=>
 {
-    const [loggedIn, setLoggedIn] = useState<boolean>(false);
+    const [allowed, setAllowed] = useState<boolean>(false);
     const [username, setUsername] = useState<string>('');
+    
     useEffect(()=>
     {
-        fetch('/home')
+        getAuth('/auth')
         .then(res=>
             {
-                if(res.ok)return res.json();
-            })
-        .then(data=>
-            {
-                if(data)
+                if(!res)
                 {
-                    setLoggedIn(data.success);
-                    setUsername(data.username);
+                    setAllowed(false);
+                }
+                else
+                {
+                    setUsername(res.username)
+                    setAllowed(true);
                 }
             })
-        .catch(err=>
-            {
-                throw err;
-                
-            })
-        
     },[])
+
     return (
 
         <nav className='navbar'>
@@ -39,35 +36,33 @@ const Navbar : React.FC = ()=>
                 {
                     if(item === "login/register")
                     {
-                        if(loggedIn)
+                        if(allowed)
                         {
-                            return(
-                                <>
-                                <div key={index} className='navbar-item'>
-                                    <Link to="/account">{username}</Link>
-                                </div>
-                                
-                                </>
-                            )
+                            return <NavItem index={index} item_name={username} link="/account" />
                         }
-                        return(
-                        <div key={index} className="navbar-item">
-                            
-                            <Link to="/sign_up">{item}</Link>
-                        </div>
-
-                        ) 
+                        return <NavItem index={index} item_name={item} link="/sign_up" />
                     }
-                    return(
-                        
-                        <div key={index} className="navbar-item">
-                        <Link to="todo">{item}</Link>
-                        </div>
-                    ) 
+                    return <NavItem index={index} item_name={item} link='todo'/ >
 
                 })}
         </nav>
     )
 }
+type ItemProps = {
+    index : number,
+    link : string,
+    item_name: string
+}
+
+const NavItem : React.FC<ItemProps> = ({index, link, item_name})=>
+{
+
+    return(
+        <div key={index} className="navbar-item">
+            <Link to={link}>{item_name}</Link>
+        </div>
+    )
+}
+
 export default Navbar;
 

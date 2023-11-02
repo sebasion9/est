@@ -25,6 +25,6 @@ export const authenticateJWT = (req : rRequest, res : Response, next : NextFunct
             next();
         });
     } else {
-        res.status(200).json({message: 'unauthorized'});
+        res.status(401).json({message: 'unauthorized'});
     }
 };

@@ -91,15 +91,11 @@ app.post('/register',(req,res)=>
     
 
 })
-app.get('/account', authenticateJWT, (req : rRequest ,res)=>
-{
-    //pass user data here
-    res.status(200).json({success:true})
-})
 
-app.get('/home', authenticateJWT, (req : rRequest, res)=>
+
+app.get('/auth', authenticateJWT, (req: rRequest, res)=>
 {
-    res.status(200).json({success:true, username: req.user.username});
+    res.status(200).json({username: req.user.username, role:req.user.role});
 })
 
 

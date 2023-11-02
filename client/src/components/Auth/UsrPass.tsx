@@ -63,8 +63,10 @@ export const UsrPass : React.FC<UsrPassProps> = (
 export async function postSubmit(endpoint: string, navigate: NavigateFunction, username:string, password: string, email? : string) : Promise<any>
 {
     let bodyValue : string;
-    email ? bodyValue =  `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&email=${email}`
-          : bodyValue = `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
+    email ? bodyValue =  
+    `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&email=${email}`
+          : bodyValue = 
+    `username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}`
         
     try
     {
