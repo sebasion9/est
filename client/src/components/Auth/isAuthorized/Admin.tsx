@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import getAuth from './auth';
+import getAuth from '../auth';
 const Admin : React.FC = ()=>
 {
+    const [code_status, setCode_status] = useState<string>('');
     const [allowed, setAllowed] = useState<boolean>(false);
     const [username, setUsername] = useState<string>('');
     const [role, setRole] = useState<string>('');
@@ -19,6 +20,7 @@ const Admin : React.FC = ()=>
                 else
                 {
                     setAllowed(false);
+                    setCode_status('403 forbidden');
                 }
             })
     },[])
@@ -29,9 +31,10 @@ const Admin : React.FC = ()=>
             <>
                 <div>welcome {username} </div>
                 <div>your role : {role} </div>
+
             </>
         )
     }
-    return <>403 Forbidden</>
+    return <>{code_status}</>
 }
 export default Admin;

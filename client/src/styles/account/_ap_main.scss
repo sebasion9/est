@@ -1,0 +1,24 @@
+.ap-main-content-item
+{
+    display:flex;
+    flex-direction: column;
+    .span-btn-container
+    {
+        margin:20px;
+        display: flex;
+        align-items: center;
+        .user-data
+        {
+            text-align: center;
+        }
+        .btn-template
+        {
+            max-width: 150px;
+        }
+        *
+        {
+            margin-inline: 20px;
+        }
+
+    }
+}

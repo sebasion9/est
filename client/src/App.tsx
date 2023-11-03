@@ -3,12 +3,12 @@ import "./styles/dist/style.css"
 
 import Root from './routes/Root';
 import NoPage from './routes/NoPage';
-import Admin from './components/Auth/Admin';
+import Admin from './components/Auth/isAuthorized/Admin';
 
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sign from './routes/Sign';
-import Account from './components/Auth/Account';
+import Account from './components/Auth/isAuthorized/Account';
 
 function App() {
   return (

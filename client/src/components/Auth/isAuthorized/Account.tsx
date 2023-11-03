@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import getAuth, { Logout, handleLogout } from './auth';
+import getAuth, { handleLogout } from '../auth';
+import AccountPanel from '../../AccountPanel/AccountPanel';
 
 const Account : React.FC = ()=>
 {
     const navigate = useNavigate();
+    const [code_status, setCode_status] = useState<string>('');
     const [allowed, setAllowed] = useState<boolean>(false);
     const [username, setUsername] = useState<string>('');
     const [role, setRole] = useState<string>('');
@@ -23,6 +25,7 @@ const Account : React.FC = ()=>
                 else
                 {
                     setAllowed(false);
+                    setCode_status('401 unauthorized');
                 }
             })
     },[])
@@ -33,9 +36,9 @@ const Account : React.FC = ()=>
     {
         return(
             <>
-                <div>welcome {username} </div>
-                <div>your role : {role} </div>
-                <Logout logout={handleLogout} navigate={navigate}/>
+            <div className="ap-container">
+                <AccountPanel logoutProps={{navigateHandler:handleLogout, navigate:navigate}} isAuthorized={false} username={username}/>
+            </div>
             </>
         )
     }
@@ -45,18 +48,15 @@ const Account : React.FC = ()=>
     {
         return(
             <>
-                <div>welcome {username} </div>
-                <div>your role : {role} </div>
-                <Logout logout={handleLogout} navigate={navigate}/>
-                <button onClick={()=>navigate('/admin')}>admin panel</button>
+            <div className="ap-container">
+                <AccountPanel logoutProps={{navigateHandler:handleLogout, navigate:navigate}} isAuthorized={true} username={username}/>
+            </div>
             </>
         )
     }
 
-    return <>401 Unauthorized</>
+    return <>{code_status}</>
 }
-
-
 
 
 export default Account;

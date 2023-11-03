@@ -95,9 +95,33 @@ app.post('/register',(req,res)=>
 
 app.get('/auth', authenticateJWT, (req: rRequest, res)=>
 {
-    res.status(200).json({username: req.user.username, role:req.user.role});
+    if(req.user)
+    {
+        res.status(200).json({username: req.user.username, role:req.user.role});
+    }
+    res.status(404).json({message:'something went wrong'});
 })
 
+app.post('/user', authenticateJWT, (req:rRequest,res)=>
+{
+    console.log('a');
+    let username = req.body.username;
+    let users : Promise<User[] | undefined>= db.user(username);
+    let user : User;
+    users.then(users=>
+        {
+            if(users)
+            {
+                user=users[0];
+                res.status(200).json(user);
+            }
+            else
+            {
+                res.status(404).json({message:'something went wrong'});
+            }
+        })
+    
+})
 
 app.listen(PORT, ()=>
 {

@@ -23,17 +23,37 @@
         }
         .navbar-item
         {
+            display: flex;
+            align-items: center;
             flex-grow: 1;
             margin: 5px;
             padding: 3px;
             border:solid 1px v.$l-bg-color;
             border-radius: 10px;
-            max-width: 20vw;
+            max-width: 10vw;
             min-width: 150px;
+            max-height: 30px;
             box-shadow: v.$black-shadow;
+            .navbar-icon-wrapper
+            {
+                display:flex;
+                overflow: hidden;
+                width: 20%;
+                height: 20%;    
+                margin:5px;
+                .navbar-icon
+                {
+                    flex-grow:1;
+                    max-width: 100%;
+                    max-height: 100%;
+                    object-fit: contain;
+                    filter: invert(47%) sepia(55%) saturate(503%) hue-rotate(289deg) brightness(85%) contrast(84%);
+                }
+            }
             &:hover
             {
                 border:1px solid white;
+                color:white;
 
             }
             &:active

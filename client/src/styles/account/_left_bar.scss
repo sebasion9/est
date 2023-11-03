@@ -1,0 +1,70 @@
+// do media here
+@use 'acc_vars' as v;
+.ap-container
+{
+    display: flex;
+    // border: solid 1px red;
+    margin: 50px;
+    min-height: 800px;
+    min-width: 500px;
+    gap:50px;
+    .ap-left-bar
+    {
+        user-select: none;
+        flex:1;
+        .button-section
+        {
+            display: flex;
+            justify-content: center;
+            button
+            {
+                margin-inline: 5px;
+                
+            }
+        }
+    }
+    .ap-main-content
+    {
+        flex:7;
+    }
+
+    .ap-left-bar, .ap-main-content
+    {
+        // border: solid 1px yellow;  
+        box-shadow: v.$a-black-shadow;
+        border-radius: 20px; 
+        padding:20px;
+    }
+}
+
+.ap-left-bar-item
+{
+    border-bottom: solid 2px rgb(255, 255, 255);
+    text-align: center;
+    border-radius: 5px;
+    margin: 40px 0px 40px 0px;
+    padding:10px;
+    cursor:pointer;
+    &:hover
+    {
+        border-bottom:2px solid v.$a-txt-color;
+        color:white;
+    }
+    &:active
+    {
+        background-color: white;
+        color:black;
+    }
+    a
+    {
+        display: block;
+        width: 100%;
+        height: 100%;
+        color:inherit;
+    }
+    &.clicked
+    {
+        background-color: white;
+        color:black;
+    }
+}

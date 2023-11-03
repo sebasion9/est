@@ -5,7 +5,7 @@ import { Request, Response, NextFunction } from 'express';
 const tokenSecret = conf.jwtSecret;
 export interface rRequest extends Request
 {
-    user? : any;
+    user? : User;
 }
 
 export function generateToken(user:User) : string
