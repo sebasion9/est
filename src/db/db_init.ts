@@ -15,7 +15,7 @@ interface dbConfig
 export default class Db
 {
     private con? : Connection;
-
+    
     public configCon = (config: dbConfig) =>
     {
         this.con = sql.createConnection(config);
@@ -69,15 +69,36 @@ export default class Db
             {
                 resolve(undefined);
             }
-
+            
         })
     }
+    public async updateUsername(old_username:string, new_username:string)
+    {
+        // update users set username='seba1' where username='seba';
+        return new Promise(resolve=>
+            {
+                if(this.con)
+                {
+                    let sql = `update users set username='${new_username}' where username='${old_username}'`;
+                    this.con.query(sql,(err,result)=>
+                    {
+                        if(err)throw err;
+                        resolve(result);
+                    })
+                }
+                else
+                {
+                    resolve(undefined);
+                }
+            })
+    }
+
     public async checkAvailability(username:string, email:string) : Promise<isAvailableRes>
     {
         try
         {
             const userByUsername = await this.user(username, undefined, undefined);
-
+            
             if(userByUsername && userByUsername.length>0)
             {
                 return { isAvailable : false, message: 'username taken'};

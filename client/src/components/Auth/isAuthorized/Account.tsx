@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import getAuth, { handleLogout } from '../auth';
+import getAuth from '../auth';
 import AccountPanel from '../../AccountPanel/AccountPanel';
 
 const Account : React.FC = ()=>
@@ -37,7 +37,7 @@ const Account : React.FC = ()=>
         return(
             <>
             <div className="ap-container">
-                <AccountPanel logoutProps={{navigateHandler:handleLogout, navigate:navigate}} isAuthorized={false} username={username}/>
+                <AccountPanel navigate={navigate} isAuthorized={false} username={username}/>
             </div>
             </>
         )
@@ -49,7 +49,7 @@ const Account : React.FC = ()=>
         return(
             <>
             <div className="ap-container">
-                <AccountPanel logoutProps={{navigateHandler:handleLogout, navigate:navigate}} isAuthorized={true} username={username}/>
+                <AccountPanel navigate={navigate} isAuthorized={true} username={username}/>
             </div>
             </>
         )

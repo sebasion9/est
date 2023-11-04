@@ -99,28 +99,37 @@ app.get('/auth', authenticateJWT, (req: rRequest, res)=>
     {
         res.status(200).json({username: req.user.username, role:req.user.role});
     }
-    res.status(404).json({message:'something went wrong'});
+    else
+    {
+        res.status(404).json({message:'something went wrong'});
+        
+    }
 })
 
-app.post('/user', authenticateJWT, (req:rRequest,res)=>
+app.post('/user', authenticateJWT, async (req:rRequest,res)=>
 {
-    console.log('a');
     let username = req.body.username;
-    let users : Promise<User[] | undefined>= db.user(username);
-    let user : User;
-    users.then(users=>
-        {
-            if(users)
-            {
-                user=users[0];
-                res.status(200).json(user);
-            }
-            else
-            {
-                res.status(404).json({message:'something went wrong'});
-            }
-        })
-    
+    let users : User[] | undefined =  await db.user(username);
+    if(users && users.length>0)
+    {
+        res.status(200).json({userFound:true, user: users[0]});
+    }
+    else
+    {
+        res.status(200).json({userFound:false, user: undefined})
+    }
+})
+app.post('/change_username', authenticateJWT, async (req:rRequest,res)=>
+{
+    let result = await db.updateUsername(req.body.username, req.body.newusername);
+    if(result)
+    {
+        res.status(200).json({success:true});
+    }
+    else
+    {
+        res.status(200).json({success:false});
+    }
 })
 
 app.listen(PORT, ()=>

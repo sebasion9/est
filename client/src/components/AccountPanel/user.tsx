@@ -7,34 +7,18 @@ export type User =
     role: 's_admin' | 'admin' | 'user' 
 }
 
-export async function fetchByUsername(username:string) : Promise<User>
+export async function fetchByUsername(username:string)
 {
     let response = await fetch('/user',
     {
         method: 'POST',
         headers: {"Content-Type" : "application/x-www-form-urlencoded"},
-        body: `username=${username}`
+        body: `username=${encodeURIComponent(username)}`
     })
     let data = await response.json();
+    if(data.user)data.user.password='';
     
     return data;
 }
 
 
-// let response = fetch('/user',
-// {
-//     method: 'POST',
-//     headers: {"Content-Type" : "application/x-www-form-urlencoded"},
-//     body: `username=${username}`
-
-// })
-
-// let data = response.then(res=>
-//     {
-//       return res.json();  
-//     })
-
-// data.then(user=>
-//     {
-//         setUser(user);
-//     })

@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import getAuth from '../Auth/auth';
 const accountIcon = require('./img/account.png');
 const items = [
-    'search','login/register'
+    'search','sign up'
 ]
 
 //      ADD MORE ROUTING
@@ -35,7 +35,7 @@ const Navbar : React.FC = ()=>
 
             {items.map((item,index)=>
                 {
-                    if(item === "login/register")
+                    if(item === "sign up")
                     {
                         if(allowed)
                         {

@@ -1,6 +1,7 @@
 import React from 'react';
 import { NavigateFunction } from 'react-router-dom';
-const EMAILREGEX : RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+const EMAILREGEX : RegExp = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const USERREGEX : RegExp = /^[a-zA-Z0-9]+([_ -]?[a-zA-Z0-9])*$/;
 
 interface UsrPassProps {
     username: string;
@@ -93,5 +94,9 @@ export async function postSubmit(endpoint: string, navigate: NavigateFunction, u
 export function validateEmail(email:string)
 {
     return EMAILREGEX.test(email);
+}
+export function validateUsername(username:string)
+{
+    return USERREGEX.test(username);
 }
 

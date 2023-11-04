@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { UsrPass, postSubmit, validateEmail } from "./UsrPass";
+import { UsrPass, postSubmit, validateEmail, validateUsername } from "./UsrPass";
 
 const Register : React.FC = ()=>
 {
@@ -13,7 +13,7 @@ const Register : React.FC = ()=>
     {
         e.preventDefault(); 
 
-        if(validateEmail(email))
+        if(validateEmail(email) && validateUsername(username))
         {
             let data = await postSubmit('/register', navigate, username, password, email);
             setRes(data.message);
@@ -21,7 +21,7 @@ const Register : React.FC = ()=>
         }
         else
         {
-            setRes('enter valid email');
+            setRes('enter valid email and valid username');
         }
     }
 

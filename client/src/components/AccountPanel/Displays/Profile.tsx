@@ -1,17 +1,31 @@
+import { useState } from "react";
+import MutableSpan from "../../General/MutableSpan";
 import { User } from "../user";
 
 const Profile : React.FC<ProfileProps> = ({user})=>
 {
+    const [isFocused, setisFocused] = useState<boolean>(false);
+    const toggleFocus = ()=>
+    {
+        setisFocused(!isFocused);
+    }
+
+
+    
+
     return(
         <>
         <div className="span-btn-container">
-            <span className="user-data">username: {user?.username}</span>
-            <button className="btn-template">change</button>
+            <MutableSpan label="username: "
+            value={user ? user.username : ""} 
+            isMutated={isFocused}
+            />
+            <button className="btn-template" onClick={toggleFocus}>edit</button>
         </div>
     
         <div className="span-btn-container">
             <span className="user-data">email: {user?.email}</span>
-            <button className="btn-template">change</button>
+            <button className="btn-template">edit</button>
         </div>
         
         <div className="span-btn-container">
@@ -28,5 +42,6 @@ const Profile : React.FC<ProfileProps> = ({user})=>
 export type ProfileProps = 
 {
     user: User | undefined
+
 }
 export default Profile;

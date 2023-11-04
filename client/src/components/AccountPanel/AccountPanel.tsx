@@ -1,9 +1,10 @@
 import { ReactElement, useEffect, useState } from "react";
-import { Logout, LogoutProps, ToAdmin, handleToAdmin } from "../Auth/auth";
 import Profile from "./Displays/Profile";
 import { User, fetchByUsername } from "./user";
+import { NavButton } from "../General/NavButton";
+import { NavigateFunction } from "react-router-dom";
 export type apProps = {
-    logoutProps : LogoutProps;
+    navigate : NavigateFunction,
     isAuthorized : boolean;
     username : string
 }
@@ -12,10 +13,8 @@ export type apProps = {
 const labels = ['profile', 'settings', 'history', 'franzl']
 
 
-const AccountPanel : React.FC<apProps> = ({logoutProps, isAuthorized, username})=>
+const AccountPanel : React.FC<apProps> = ({navigate, isAuthorized, username})=>
 {
-    const handleLogout = logoutProps.navigateHandler;
-    const navigate = logoutProps.navigate;
     const [clickedItem, setClickedItem] = useState<string>(labels[0]);
     const [user, setUser] = useState<User>();
     const toggleClicked = (item: string)=>
@@ -25,9 +24,12 @@ const AccountPanel : React.FC<apProps> = ({logoutProps, isAuthorized, username})
     useEffect(()=>
     {
         // in future also fetch history, cart data etc
-        fetchByUsername(username).then(user=>
+        fetchByUsername(username).then(response=>
             {
-                setUser(user);
+                if(response.user)
+                {
+                    setUser(response.user);
+                }
             })
 
     },[])
@@ -47,8 +49,9 @@ const AccountPanel : React.FC<apProps> = ({logoutProps, isAuthorized, username})
                     })}                    
                     
                 <div className="button-section">
-                    <Logout navigateHandler={handleLogout} navigate={navigate}/>
-                    <ToAdmin navigateHandler={handleToAdmin} navigate={navigate}/>
+                    <NavButton navigate={navigate} location='/' label='shop'/>
+                    <NavButton navigate={navigate} location={'/'} label="logout" callback={()=>{document.cookie = "token=; Max-Age=0";}}/>
+                    <NavButton navigate={navigate} location={'/admin'} label="admin"/>
                 </div>
 
                 </nav>
@@ -73,7 +76,8 @@ const AccountPanel : React.FC<apProps> = ({logoutProps, isAuthorized, username})
                         isClicked={clickedItem === item} />
                     })}   
             <div className='button-section'>
-                <Logout navigateHandler={handleLogout} navigate={navigate}/>
+                <NavButton navigate={navigate} location='/' label='shop'/>
+                <NavButton navigate={navigate} location={'/'} label="logout" callback={()=>{document.cookie = "token=; Max-Age=0";}}/>
             </div>
             </nav>
             <main className="ap-main-content">
