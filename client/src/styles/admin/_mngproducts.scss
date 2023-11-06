@@ -1,0 +1,101 @@
+.mp-container
+{
+    margin:10px;
+    display:flex;
+    justify-content: space-around;
+    height: 60vh;
+    .mp-section-container
+    {
+        max-width: 250px;
+        min-width: 200px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .mp-label
+        {
+            text-align: center;
+            margin-bottom:15px;
+        }
+        .mp-section
+        {
+            display: flex;
+            flex-direction: column;
+            padding: 5px;
+            min-width: 200px;
+            max-width: 250px;
+            text-align: center;
+            max-height: 100vh;
+            margin:5px;
+            overflow: auto;
+
+            &::-webkit-scrollbar 
+            {
+                width: 12px;
+            }
+              
+            &::-webkit-scrollbar-track 
+            {
+                background: #1a1d1b;
+            }
+            
+            &::-webkit-scrollbar-thumb 
+            {
+                background-color: rgb(95, 94, 94);    /* color of the scroll thumb */
+                border-radius: 5px;
+            }
+
+
+            .item-container
+            {
+                margin:15px;
+                display: flex;
+                justify-content: center;
+                flex-wrap: wrap;
+                .item-edit, .item-del
+                {
+                    user-select: none;
+                    height: 20px;
+                    width: 60px;
+                    font-size: 12px;
+                    background-color:white;
+                    text-align: center;
+                    padding:5px;
+                }
+                .item-edit:hover
+                {
+                    background-color: green;
+                    border:none;
+                }
+                .item-del:hover
+                {
+                    background-color: red;
+                    border:none;
+                }
+                .item-name,.item-id
+                {
+                    
+                    font-size: 14px;
+                    text-align: center;
+                    width: 100%;
+                    word-wrap: break-word;
+                }
+                .item-name
+                {
+                    color:White;
+                }
+                *
+                {
+                    margin:5px;
+                }
+            }
+        }
+        
+    }
+    .item-count
+    {
+        width: 100%;
+        word-wrap: break-word;
+        text-align: center;
+        font-size: 14px;
+    }
+}

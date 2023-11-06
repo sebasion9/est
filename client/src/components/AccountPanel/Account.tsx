@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import getAuth from '../auth';
-import AccountPanel from '../../AccountPanel/AccountPanel';
+import getAuth from '../Auth/auth';
+import AccountPanel from './Panel';
+import { NavButton } from '../General/NavButton';
+import ReturnSect from '../General/ReturnSect';
 
-const Account : React.FC = ()=>
+const Account : React.FC<{account_labels:string[]}> = ({account_labels})=>
 {
     const navigate = useNavigate();
     const [code_status, setCode_status] = useState<string>('');
@@ -37,7 +39,7 @@ const Account : React.FC = ()=>
         return(
             <>
             <div className="ap-container">
-                <AccountPanel navigate={navigate} isAuthorized={false} username={username}/>
+                <AccountPanel navigate={navigate} isAuthorized={false} username={username} accountLabels={account_labels}/>
             </div>
             </>
         )
@@ -49,13 +51,13 @@ const Account : React.FC = ()=>
         return(
             <>
             <div className="ap-container">
-                <AccountPanel navigate={navigate} isAuthorized={true} username={username}/>
+                <AccountPanel navigate={navigate} isAuthorized={true} username={username} accountLabels={account_labels}/>
             </div>
             </>
         )
     }
 
-    return <>{code_status}</>
+    return <ReturnSect code_status={code_status}/>;
 }
 
 

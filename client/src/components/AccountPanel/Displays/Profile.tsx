@@ -4,12 +4,7 @@ import { User } from "../user";
 
 const Profile : React.FC<ProfileProps> = ({user})=>
 {
-    const [isFocused, setisFocused] = useState<boolean>(false);
-    const toggleFocus = ()=>
-    {
-        setisFocused(!isFocused);
-    }
-
+    const [isFocused, setisFocused] = useState<boolean[]>([false,false]);
 
     
 
@@ -18,14 +13,18 @@ const Profile : React.FC<ProfileProps> = ({user})=>
         <div className="span-btn-container">
             <MutableSpan label="username: "
             value={user ? user.username : ""} 
-            isMutated={isFocused}
+            isMutated={isFocused[0]}
             />
-            <button className="btn-template" onClick={toggleFocus}>edit</button>
+            <button className="btn-template" onClick={()=>setisFocused([!isFocused[0],isFocused[1]])}>edit</button>
         </div>
     
         <div className="span-btn-container">
-            <span className="user-data">email: {user?.email}</span>
-            <button className="btn-template">edit</button>
+
+            <MutableSpan
+            label="email: "
+            value={user ? user.email : ""}
+            isMutated={isFocused[1]}
+            />
         </div>
         
         <div className="span-btn-container">

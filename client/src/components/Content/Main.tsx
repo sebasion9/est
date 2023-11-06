@@ -6,6 +6,7 @@ const test_items = [
 const b_telega = require('./img/telega.jpg');
 const telega = require('./img/xDD.jpg');
 const ppl_telega = require('./img/telega-ppl.jpg');
+const kibitka = require('./img/aa.png');
 
 //  STATIC RENDERING
 
@@ -15,10 +16,10 @@ const Main : React.FC = ()=>
         <main className='main'>
             {test_items.map((item,index)=>
             {
-                let mod = index%3;
+                let mod = index%4;
                 if(mod === 0)
                 {
-                    return <ItemCard key={index} name='telega z ludzmi' img_path={ppl_telega}/>
+                    return <ItemCard key={index} name='kibitka' img_path={kibitka}/>
                 }
                 if(mod === 1)
                 {
@@ -27,6 +28,10 @@ const Main : React.FC = ()=>
                 if(mod === 2)
                 {
                     return <ItemCard key={index} name='telega' img_path={telega}/>
+                }
+                if(mod === 3)
+                {
+                    return <ItemCard key={index} name='telega z ludzmi' img_path={ppl_telega}/>
                 }
             })}
         </main>

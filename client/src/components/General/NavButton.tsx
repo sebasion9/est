@@ -1,11 +1,12 @@
-import { NavigateFunction} from "react-router-dom";
-export type NavButtonProps = {navigate : NavigateFunction, location:string, label:string, callback? : ()=>void}
+import { NavigateFunction, useNavigate} from "react-router-dom";
+export type NavButtonProps = {location:string, label:string, callback? : ()=>void}
 
 
 const NavButton : React.FC<NavButtonProps> =
-({navigate,location,label, callback})=>
+({location,label, callback})=>
 {
 
+    const navigate = useNavigate();
     return<button className="btn-template" onClick={()=>{
         if(callback)
         {

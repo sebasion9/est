@@ -6,16 +6,14 @@ import { NavigateFunction } from "react-router-dom";
 export type apProps = {
     navigate : NavigateFunction,
     isAuthorized : boolean;
-    username : string
+    username : string,
+    accountLabels : string[]
 }
 
 
-const labels = ['profile', 'settings', 'history', 'franzl']
-
-
-const AccountPanel : React.FC<apProps> = ({navigate, isAuthorized, username})=>
+const AccountPanel : React.FC<apProps> = ({navigate, isAuthorized, username, accountLabels})=>
 {
-    const [clickedItem, setClickedItem] = useState<string>(labels[0]);
+    const [clickedItem, setClickedItem] = useState<string>(accountLabels[0]);
     const [user, setUser] = useState<User>();
     const toggleClicked = (item: string)=>
     {
@@ -39,7 +37,7 @@ const AccountPanel : React.FC<apProps> = ({navigate, isAuthorized, username})=>
             <>
                 <nav className='ap-left-bar'>
 
-                    {labels.map((item,index)=>
+                    {accountLabels.map((item,index)=>
                     {
                         return <LeftBarItem
                         label={item}
@@ -49,9 +47,9 @@ const AccountPanel : React.FC<apProps> = ({navigate, isAuthorized, username})=>
                     })}                    
                     
                 <div className="button-section">
-                    <NavButton navigate={navigate} location='/' label='shop'/>
-                    <NavButton navigate={navigate} location={'/'} label="logout" callback={()=>{document.cookie = "token=; Max-Age=0";}}/>
-                    <NavButton navigate={navigate} location={'/admin'} label="admin"/>
+                    <NavButton location='/' label='shop'/>
+                    <NavButton location={'/'} label="logout" callback={()=>{document.cookie = "token=; Max-Age=0";}}/>
+                    <NavButton location={'/admin'} label="admin"/>
                 </div>
 
                 </nav>
@@ -67,7 +65,7 @@ const AccountPanel : React.FC<apProps> = ({navigate, isAuthorized, username})=>
     return (
         <>
             <nav className='ap-left-bar'>
-                    {labels.map((item,index)=>
+                    {accountLabels.map((item,index)=>
                     {
                         return <LeftBarItem
                         label={item}
@@ -76,8 +74,8 @@ const AccountPanel : React.FC<apProps> = ({navigate, isAuthorized, username})=>
                         isClicked={clickedItem === item} />
                     })}   
             <div className='button-section'>
-                <NavButton navigate={navigate} location='/' label='shop'/>
-                <NavButton navigate={navigate} location={'/'} label="logout" callback={()=>{document.cookie = "token=; Max-Age=0";}}/>
+                <NavButton location='/' label='shop'/>
+                <NavButton location={'/'} label="logout" callback={()=>{document.cookie = "token=; Max-Age=0";}}/>
             </div>
             </nav>
             <main className="ap-main-content">
@@ -144,3 +142,8 @@ const APMainItem : React.FC<APMainItemProps> = ({content})=>
     )
 }
 export default AccountPanel;
+
+export
+{
+    APMainDisplay,APMainItem,LeftBarItem
+}

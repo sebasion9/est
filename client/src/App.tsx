@@ -3,12 +3,12 @@ import "./styles/dist/style.css"
 
 import Root from './routes/Root';
 import NoPage from './routes/NoPage';
-import Admin from './components/Auth/isAuthorized/Admin';
-
+import Admin from './components/Auth/Admin/Admin';
+import Account from './components/AccountPanel/Account';
+import labels from './components/General/labels.json';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Sign from './routes/Sign';
-import Account from './components/Auth/isAuthorized/Account';
 
 function App() {
   return (
@@ -23,10 +23,10 @@ function App() {
           <Route path='/sign_up' element={<Sign/>}>
 
           </Route>
-          <Route path='/admin' element={<Admin />}>
+          <Route path='/admin' element={<Admin leftbar_labels={labels.adminLabels}/>}>
 
           </Route>
-          <Route path='/account' element={<Account/>}>
+          <Route path='/account' element={<Account account_labels={labels.accountLabels}/>}>
 
           </Route>
 

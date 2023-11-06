@@ -119,6 +119,12 @@ app.post('/user', authenticateJWT, async (req:rRequest,res)=>
         res.status(200).json({userFound:false, user: undefined})
     }
 })
+app.post('/email', authenticateJWT, (req:rRequest,res)=>
+{
+
+})
+
+
 app.post('/change_username', authenticateJWT, async (req:rRequest,res)=>
 {
     let result = await db.updateUsername(req.body.username, req.body.newusername);

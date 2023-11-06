@@ -50,6 +50,8 @@ const MutableSpan : React.FC<MutablSpanProps> =
             }
         }
         checkUsername();
+
+
     },[newUsername])
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLSpanElement>) => {
 
@@ -97,7 +99,7 @@ const MutableSpan : React.FC<MutablSpanProps> =
             >
                 {value}
             </span>
-            {u_IsAvailable ? <NavButton navigate={navigate}
+            {u_IsAvailable ? <NavButton
             label="submit"
             location="/account"
             callback={()=>changeUsername(newUsername)}
