@@ -14,7 +14,8 @@ type MutablSpanProps =
 const MutableSpan : React.FC<MutablSpanProps> =
 ({label, isMutated, value})=>
 {
-    const [newUsername, setEditableValue] = useState<string>(value);
+    
+    const [editableValue, setEditableValue] = useState<string>(value);
     const [u_IsAvailable, setU_IsAvailable] = useState<boolean>(false);
     const contentEditableRef = useRef<HTMLSpanElement>(null);
     const navigate = useNavigate();
@@ -39,8 +40,8 @@ const MutableSpan : React.FC<MutablSpanProps> =
     {
         async function checkUsername()
         {
-            let response = await fetchByUsername(newUsername);
-            if(!response.userFound && validateUsername(newUsername))
+            let response = await fetchByUsername(editableValue);
+            if(!response.userFound && validateUsername(editableValue))
             {
                 setU_IsAvailable(true);
             }
@@ -52,14 +53,14 @@ const MutableSpan : React.FC<MutablSpanProps> =
         checkUsername();
 
 
-    },[newUsername])
+    },[editableValue])
     const handleKeyDown = async (e: React.KeyboardEvent<HTMLSpanElement>) => {
 
         if (e.key === "Enter") {
             e.preventDefault();
             if(u_IsAvailable)
             {
-                await changeUsername(newUsername);
+                await changeUsername(editableValue);
             }
         }
     };
@@ -81,7 +82,6 @@ const MutableSpan : React.FC<MutablSpanProps> =
             headers: {"Content-Type": "application/x-www-form-urlencoded"},
             body: `username=${encodeURIComponent(value)}&newusername=${encodeURIComponent(newUsername)}`
         })
-        let data = await response.json();
         document.cookie = "token=; Max-Age=0";
         navigate('/');
     }
@@ -102,7 +102,7 @@ const MutableSpan : React.FC<MutablSpanProps> =
             {u_IsAvailable ? <NavButton
             label="submit"
             location="/account"
-            callback={()=>changeUsername(newUsername)}
+            callback={()=>changeUsername(editableValue)}
             /> : <></>}
             </>
         )

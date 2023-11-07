@@ -3,7 +3,7 @@
     margin:10px;
     display:flex;
     justify-content: space-around;
-    height: 60vh;
+    max-height: 700px;
     .mp-section-container
     {
         max-width: 250px;
@@ -11,10 +11,14 @@
         display: flex;
         flex-direction: column;
         align-items: center;
+        margin-inline:10px;
         .mp-label
         {
             text-align: center;
             margin-bottom:15px;
+            padding-bottom:10px;
+            border-bottom: 2px solid white;
+            border-radius:5px;
         }
         .mp-section
         {
@@ -25,7 +29,7 @@
             max-width: 250px;
             text-align: center;
             max-height: 100vh;
-            margin:5px;
+            margin:20px;
             overflow: auto;
 
             &::-webkit-scrollbar 
@@ -88,6 +92,66 @@
                     margin:5px;
                 }
             }
+
+            .add-item-container
+            {
+                display:flex;
+                flex-direction: column;
+                .add-item-txt-input, #add-item-list-input
+                {
+                    margin-bottom:60px;
+                    padding-inline: 20px;
+                    font-family: 'retro-mono';
+                    text-decoration: none;
+                    color:white;
+                    background-color: #2b302c;
+                    border : 1px solid #2b302c;
+                    border-radius:15px;
+                    height: 40px;
+                    &:focus
+                    {
+                        outline: none;
+                        caret-color: transparent;
+                        background-color: rgb(95, 94, 94);
+                    }
+                }
+                input[type=number]::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                }
+                input[type=file] {
+                    display: none;
+                }
+                .add-item-file-input
+                {
+                    font-size: 14px;
+                    padding: 10px;
+                    &:hover
+                    {
+                        cursor:pointer;
+                    }
+                }
+                #add-item-list-input
+                {
+                    height: 40px;
+                    padding:10px;
+                }
+                .add-item-response
+                {
+                    margin:10px;
+                    font-size:10px;
+                    word-wrap: break-word;
+                }
+                .ok
+                {
+                    color:rgb(5, 255, 5);
+                }
+                .notok
+                {
+                    color:red;
+                }
+            }
+
+
         }
         
     }

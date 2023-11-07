@@ -45,8 +45,9 @@
         input
         {
             font-family: 'retro-mono';
-            font-weight: 700;
-            color:v.$l-txt-color;
+            font-weight: 500;
+            // color:v.$l-txt-color;
+            color:White;
             background-color: v.$l-bg-lighter-color;
             border-radius: 10px;
             &:focus

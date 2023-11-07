@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
+import multer from 'multer';
 import conf from './db/dbconf.json';
 import Db from './db/db_init';
 import { User } from './db/user';
@@ -12,6 +13,8 @@ let db : Db = new Db;
 db.configCon(conf);
 
 let app = express();
+const storage = multer.memoryStorage();
+const upload = multer({storage:storage});
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -119,9 +122,27 @@ app.post('/user', authenticateJWT, async (req:rRequest,res)=>
         res.status(200).json({userFound:false, user: undefined})
     }
 })
-app.post('/email', authenticateJWT, (req:rRequest,res)=>
+app.post('/upload_item', authenticateJWT, upload.single('image'), (req:rRequest,res)=>
 {
+    if(req.user)
+    {
+        if(req.user?.role === "admin" || req.user?.role === "s_admin")
+        {
+            
+            console.log(req.body);
+            console.log(req.file);
+            res.status(200).json({message:'success'});
+        }
+        else
+        {
+            res.status(401).json({message:'unauthorized'});
+        }
+    }
+    else
+    {
+        res.status(401).json({message:'unauthorized'});
 
+    }
 })
 
 
