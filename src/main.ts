@@ -1,10 +1,11 @@
 import express from 'express';
+import path from 'path';
 import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import multer from 'multer';
 import conf from './db/dbconf.json';
 import Db from './db/db_init';
-import { User } from './db/user';
+import { Product, User } from './db/types';
 import { randomId, hashPass } from './auth/crypto';
 import { generateToken, authenticateJWT, rRequest } from './auth/jwt';
 const PORT = 3001;
@@ -13,8 +14,22 @@ let db : Db = new Db;
 db.configCon(conf);
 
 let app = express();
-const storage = multer.memoryStorage();
+// const storage = multer.memoryStorage();
+const storage = multer.diskStorage({
+    destination: (req,file,cb)=>
+    {
+        cb(null, 'src/db/imgs/');
+    },
+    filename: (req,file,cb)=>
+    {
+        const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+        const fileExtension = path.extname(file.originalname);
+        cb(null, file.fieldname + '-' + uniqueSuffix + fileExtension);
+    }
+})
+
 const upload = multer({storage:storage});
+
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(bodyParser.json());
@@ -122,16 +137,37 @@ app.post('/user', authenticateJWT, async (req:rRequest,res)=>
         res.status(200).json({userFound:false, user: undefined})
     }
 })
-app.post('/upload_item', authenticateJWT, upload.single('image'), (req:rRequest,res)=>
+app.post('/upload_item', authenticateJWT, upload.single('image'), async (req:rRequest,res)=>
 {
     if(req.user)
     {
         if(req.user?.role === "admin" || req.user?.role === "s_admin")
         {
+
+            // console.log(req.body);
+            if(req.file)
+            {
+                // const {name, description, price, category} = req.body;
+                const item: Product = req.body;
+                const abs_path = __dirname + '\\..\\' + req.file.path;
+                const size = req.file.size;
+                item.id =  randomId();
+                item.path = abs_path;
+                item.size = size;
+
+                if(await db.registerProduct(item))
+                {
+                    res.status(200).json({message:'success'});
+
+                }
+                else
+                {
+                    res.status(200).json({message:'failed'});
+                }
+
+            }
+            else res.status(200).json({message: 'failed'});
             
-            console.log(req.body);
-            console.log(req.file);
-            res.status(200).json({message:'success'});
         }
         else
         {
@@ -144,7 +180,20 @@ app.post('/upload_item', authenticateJWT, upload.single('image'), (req:rRequest,
 
     }
 })
+app.get('/products', async(req:rRequest, res)=>
+{
+    let products = await db.product();
+    if(products)
+    {
+        res.status(200).json({products});
+    }
+    else
+    {
 
+        res.status(200).json({message: 'failed'});
+    }
+    
+})
 
 app.post('/change_username', authenticateJWT, async (req:rRequest,res)=>
 {

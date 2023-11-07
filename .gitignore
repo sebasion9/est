@@ -5,4 +5,5 @@ client/src/components/Content/img/*
 dist
 node_modules
 src/db/dbconf.json
+src/db/imgs
 .vscode

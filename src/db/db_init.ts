@@ -1,5 +1,5 @@
 import sql, { Connection, escape } from 'mysql';
-import { User , isAvailableRes } from './user';
+import { Product, User , isAvailableRes } from './types';
 import { hashPass } from '../auth/crypto';
 
 interface dbConfig
@@ -20,8 +20,6 @@ export default class Db
     {
         this.con = sql.createConnection(config);
     }
-    
-    
     public async user(username?:string, email?:string, id?:number) : Promise<User[] | undefined>
     {
     return new Promise(resolve=>
@@ -92,7 +90,6 @@ export default class Db
                 }
             })
     }
-
     public async checkAvailability(username:string, email:string) : Promise<isAvailableRes>
     {
         try
@@ -134,6 +131,39 @@ export default class Db
         }
         return false;
     };
+    public async registerProduct(item : Product)
+    {
+        if(this.con)
+        {
+            let sql = 'insert into products (id, name, description, price, category, path, size) values (?, ?, ?, ?, ?, ?, ?)';
+            const values = [item.id, item.name, item.description, item.price, item.category, item.path, item.size];
+            this.con.query(sql, values, (err,result)=>
+            {
+                if(err)throw err;
+                return true;
+            })
+        }
+        return false;
+    }
+    public async product() : Promise<Product[] | undefined>
+    {
+        return new Promise(resolve=>
+            {
+                if(this.con)
+                {
+                    let sql = 'select * from products;';
+                    this.con.query(sql, (err,result)=>
+                    {
+                        if(err)throw err;
+                        resolve(result);
+                    });
+                }
+                else
+                {
+                    resolve(undefined);
+                }
+            })
+    }
     public async checkPassword(username:string, password:string)
     {
         let users : User[] | undefined = await this.user(username);
