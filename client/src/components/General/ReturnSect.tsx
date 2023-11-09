@@ -1,9 +1,7 @@
-import { useNavigate } from "react-router-dom";
 import { NavButton } from "./NavButton"
 
 const ReturnSect : React.FC<{code_status:string}> = ({code_status})=>
 {
-    const navigate = useNavigate();
     return(
         <div className='return-section'>
             

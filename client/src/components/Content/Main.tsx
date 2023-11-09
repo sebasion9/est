@@ -1,38 +1,23 @@
-import React from 'react';
-const test_items = [
-    '1','2','3','4','5','6','1','2','3','4','5','6','1','2','3','4','5','6'
-]
-// const rico = require('./img/rico.jpg');
-const b_telega = require('./img/telega.jpg');
-const telega = require('./img/xDD.jpg');
-const ppl_telega = require('./img/telega-ppl.jpg');
-const kibitka = require('./img/aa.png');
+import React, { useEffect, useState } from 'react';
+import { Product } from '../General/types';
+import { fetchProducts } from '../General/fetch';
 
 //  STATIC RENDERING
 
 const Main : React.FC = ()=>
 {
+    const [items, setItems] = useState<Product[]>([]);
+    useEffect(()=>
+    {
+        fetchProducts(setItems, '/products');
+
+    },[])
     return (
+            // return <ItemCard key={index} name='kibitka' img_path={kibitka}/>
         <main className='main'>
-            {test_items.map((item,index)=>
+            {items.map((item,index)=>
             {
-                let mod = index%4;
-                if(mod === 0)
-                {
-                    return <ItemCard key={index} name='kibitka' img_path={kibitka}/>
-                }
-                if(mod === 1)
-                {
-                    return <ItemCard key={index} name='barrel telega' img_path={b_telega}/>
-                }
-                if(mod === 2)
-                {
-                    return <ItemCard key={index} name='telega' img_path={telega}/>
-                }
-                if(mod === 3)
-                {
-                    return <ItemCard key={index} name='telega z ludzmi' img_path={ppl_telega}/>
-                }
+                return <ItemCard key={index} path={item.path} id={item.id} description={item.description} name={item.name} price={item.price} category={item.category}/>
             })}
         </main>
     )
@@ -41,20 +26,17 @@ export default Main;
 //       //////////
 
 
-type ItemCardProps = {
-    name:string;
-    img_path:string;
-}
+
 //  ADD DESCRIPTION ETc.
 
-const ItemCard : React.FC<ItemCardProps> = (item: ItemCardProps)=>
+const ItemCard : React.FC<Product> = (item: Product)=>
 {
     return(
         <div className='card-container'>
 
             <div className='card-img-wrapper'>
                 <img className='card-img' 
-                src={item.img_path}
+                src={`${item.path}`}
                 />
 
             </div>
@@ -78,7 +60,7 @@ const ItemCard : React.FC<ItemCardProps> = (item: ItemCardProps)=>
             </div>
 
             <p className='card-description'>                
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic
+                {item.description}
             </p>
             
         </div>

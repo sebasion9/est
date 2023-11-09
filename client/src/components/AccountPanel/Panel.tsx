@@ -1,6 +1,7 @@
 import { ReactElement, useEffect, useState } from "react";
 import Profile from "./Displays/Profile";
-import { User, fetchByUsername } from "./user";
+import { User } from "../General/types";
+import { fetchByUsername } from "../General/fetch";
 import { NavButton } from "../General/NavButton";
 import { NavigateFunction } from "react-router-dom";
 export type apProps = {

@@ -1,14 +1,11 @@
-import {Request} from 'express';
 export type User = 
 {
     id:string,
     username:string,
-    password:string,
+    password?:string,
     email:string,
     role: 's_admin' | 'admin' | 'user' 
 }
-export type isAvailableRes = {isAvailable : boolean, message: string}
-
 export type Product =
 {
     id:string,
@@ -18,8 +15,4 @@ export type Product =
     category:string,
     path?:string,
     size?:number
-}
-export interface userRequest extends Request
-{
-    user? : User;
 }

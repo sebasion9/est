@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import conf from '../db/dbconf.json';
+import conf from '../db/conf/dbconf.json';
 import { User } from '../db/types';
 import { Request, Response, NextFunction } from 'express';
 const tokenSecret = conf.jwtSecret;

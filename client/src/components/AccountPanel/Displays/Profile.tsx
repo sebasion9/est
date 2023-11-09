@@ -1,6 +1,6 @@
 import { useState } from "react";
 import MutableSpan from "../../General/MutableSpan";
-import { User } from "../user";
+import { User } from "../../General/types";
 
 const Profile : React.FC<ProfileProps> = ({user})=>
 {

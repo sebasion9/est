@@ -1,0 +1,8 @@
+{
+    "user" : "root",
+    "port": 3306,
+    "password" : "franzllang",
+    "host" : "127.0.0.1",
+    "database" : "est",
+    "jwtSecret" : "28df142e961f04758f6acf7a1a213f99"
+}

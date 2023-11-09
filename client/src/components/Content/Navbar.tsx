@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import getAuth from '../Auth/auth';
-const accountIcon = require('./img/account.png');
+import getAuth from '../General/fetch';
+// const accountIcon = require('./img/account.png');
 const items = [
     'search','sign up'
 ]
@@ -43,9 +43,13 @@ const Navbar : React.FC = ()=>
                             index={index} 
                             item_name={username} 
                             link="/account"
-                            icon_src={accountIcon} />
+                            // icon_src={accountIcon}
+                             />
                         }
-                        return <NavItem index={index} item_name={item} link="/sign_up" icon_src={accountIcon}/>
+                        return <NavItem index={index} item_name={item} link="/sign_up" 
+                        
+                        // icon_src={accountIcon}
+                        />
                     }
                     return <NavItem index={index} item_name={item} link='todo'/ >
 

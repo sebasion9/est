@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { User, fetchByUsername } from "../AccountPanel/user";
+import { fetchByUsername } from "./fetch";
 import { NavButton } from "./NavButton";
 import { useNavigate } from "react-router-dom";
 import { validateUsername } from "../Auth/Login/UsrPass";
@@ -9,7 +9,6 @@ type MutablSpanProps =
     label:string,
     isMutated:boolean,
     value:string,
-    // submitChange: ()=>void;
 }
 const MutableSpan : React.FC<MutablSpanProps> =
 ({label, isMutated, value})=>

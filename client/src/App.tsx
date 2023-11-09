@@ -3,8 +3,8 @@ import "./styles/dist/style.css"
 
 import Root from './routes/Root';
 import NoPage from './routes/NoPage';
-import Admin from './components/Auth/Admin/Admin';
-import Account from './components/AccountPanel/Account';
+import Admin from './routes/Admin';
+import Account from './routes/Account';
 import labels from './components/General/labels.json';
 
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -30,9 +30,9 @@ function App() {
 
           </Route>
 
-          <Route path='*' element={<NoPage/>}>
+          {/* <Route path='*' element={<NoPage/>}>
           </Route>
-        
+         */}
           </Routes>
     </BrowserRouter>
     </>

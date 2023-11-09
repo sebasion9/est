@@ -1,4 +1,4 @@
-import { NavigateFunction, useNavigate} from "react-router-dom";
+import { useNavigate} from "react-router-dom";
 export type NavButtonProps = {location:string, label:string, callback? : ()=>void}
 
 

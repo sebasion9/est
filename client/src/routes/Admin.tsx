@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import getAuth from '../auth';
-import { LeftBarItem } from '../../AccountPanel/Panel';
-import Display from './Display';
-import { NavButton } from '../../General/NavButton';
+import getAuth from '../components/General/fetch';
+import { LeftBarItem } from '../components/AccountPanel/Panel';
+import Display from '../components/Auth/Admin/Display';
+import { NavButton } from '../components/General/NavButton';
 import { useNavigate } from 'react-router-dom';
-import ReturnSect from '../../General/ReturnSect';
+import ReturnSect from '../components/General/ReturnSect';
 type AdminProps = {
     leftbar_labels : string[]
 }

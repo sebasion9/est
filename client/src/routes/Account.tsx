@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import getAuth from '../Auth/auth';
-import AccountPanel from './Panel';
-import { NavButton } from '../General/NavButton';
-import ReturnSect from '../General/ReturnSect';
+import getAuth from '../components/General/fetch';
+import AccountPanel from '../components/AccountPanel/Panel';
+import ReturnSect from '../components/General/ReturnSect';
 
 const Account : React.FC<{account_labels:string[]}> = ({account_labels})=>
 {
